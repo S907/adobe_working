@@ -70,7 +70,7 @@ function App() {
       console.log('PDF stuff!');
       let adobeDCView = new window.AdobeDC.View({ clientId: ADOBE_KEY, divId: "mypdf" });
       console.log('60useffect::::', adobeDCView);
-           adobeDCView.previewFile({
+          return adobeDCView.previewFile({
         //https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf
         //https://static.raymondcamden.com/enclosures/cat.pdf
         content: { location: { url: url } },
