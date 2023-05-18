@@ -9,8 +9,9 @@ written permission of Adobe.
 */
 
 import React, { Component, useEffect, useState } from 'react';
-import ViewSDKClient from './ViewSDKClient';
-import { displayPDF, loadDynamicUrl } from './viewPdf';
+// import ViewSDKClient from './ViewSDKClient';
+import { loadDynamicUrl } from './viewPdf';
+
 const ADOBE_KEY = 'd335ea21d7304cb9aa126236ce08ac96';
 const url = 'https://static.raymondcamden.com/enclosures/cat.pdf'
 
@@ -27,12 +28,16 @@ function App() {
     console.log('18useeffect:::::::', window);
     if (loaded) return;
     loadDynamicUrl(setLoaded);
-    return () => {
-      window.removeEventListener('load', loadDynamicUrl)
+    console.log('18useeffect:::::::', window.AdobeDC);
+    
+    return ()=>{
+      console.log('Entered this function');
+      window.removeEventListener('load', loadDynamicUrl(setLoaded));
     }
   }, [loaded]);
-  console.log('21:::::::', window.AdobeDC);
 
+
+  console.log('21:::::::', window);
   //working with class code
   //    useEffect(()=>{
   //     const viewSDKClient = new ViewSDKClient();
@@ -47,22 +52,29 @@ function App() {
   //     });
   // }) 
 
+ 
+ 
   useEffect(() => {
-    console.log('51:::::', window.AdobeDC);
+    console.log('51useffect:::::', window);
+    console.log('51useffect:::::', window.AdobeDC);
+
     if (window.AdobeDC) {
+      console.log('52 useffect:::::::',window.AdobeDC);
       displayPDF(url);
     } else {
-      window.document.addEventListener("adobe_dc_view_sdk.ready", () => displayPDF(url));
-    }
+      console.log('Entered else useffect');
+      window.addEventListener("adobe_dc_view_sdk.ready", () => displayPDF(url));
+    };
     function displayPDF(url) {
+      console.log('Displayfunc::::', window.AdobeDC);
       console.log('PDF stuff!');
       let adobeDCView = new window.AdobeDC.View({ clientId: ADOBE_KEY, divId: "mypdf" });
-      console.log('60::::', adobeDCView);
-       return adobeDCView.previewFile({
+      console.log('60useffect::::', adobeDCView);
+           adobeDCView.previewFile({
         //https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf
         //https://static.raymondcamden.com/enclosures/cat.pdf
         content: { location: { url: url } },
-        metaData: { fileName: "brochure.pdf" }
+        metaData: { fileName: "cat.pdf" }
       },
         {
           embedMode: "IN_LINE"
@@ -71,15 +83,24 @@ function App() {
     }
     // displayPDF(url);
     return () => {
-      document.removeEventListener("adobe_dc_view_sdk.ready", displayPDF(url));
+      console.log('Cleanup2nd::::::', window.AdobeDC);
+      document.removeEventListener("adobe_dc_view_sdk.ready", ()=>displayPDF(url));
     }
-  }, [url]);
+  },[url]);
 
 
 
 
 
-  return <div style={{ height: '100vh' }} id="mypdf" className="full-window-div" />;
+  return (
+    <>
+    <div className='wrapper'>
+
+    <div style={{ height: '100vh' }} id="mypdf" className="full-window-div" />
+
+    </div>
+    </>
+  );
 
 }
 

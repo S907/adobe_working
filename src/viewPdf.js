@@ -3,6 +3,11 @@ export const loadDynamicUrl = (setCallback)=>{
     getScript.src = 'https://documentservices.adobe.com/view-sdk/viewer.js';
     getScript.addEventListener('load', setCallback(true));
     document.body.appendChild(getScript);
+
+    // return ()=>{
+    //   document.body.removeChild(getScript);
+    //   getScript.removeEventListener('load', setCallback(false));
+    // }
 }
 
 
