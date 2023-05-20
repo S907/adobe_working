@@ -73,7 +73,11 @@ function App() {
       console.log('PDF stuff!');
       let adobeDCView = new window.AdobeDC.View({ clientId: ADOBE_KEY, divId: "mypdf" });
       console.log('60useffect::::', adobeDCView);
+<<<<<<< HEAD
          return  adobeDCView.previewFile({
+=======
+          return adobeDCView.previewFile({
+>>>>>>> 858b4a1a75cf57897c5b05f93435c09bec350b4d
         //https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf
         //https://static.raymondcamden.com/enclosures/cat.pdf
         content: { location: { url: url } },
