@@ -1,4 +1,3 @@
-
 /*Copyright 2020 Adobe
 All Rights Reserved.
 NOTICE: Adobe permits you to use, modify, and distribute this file in

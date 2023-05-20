@@ -8,6 +8,7 @@ then your use, modification, or distribution of it requires the prior
 written permission of Adobe.
 */
 
+<<<<<<< HEAD
 import React, { Component, useEffect, useState } from 'react';
 import ViewSDKClient from './ViewSDKClient';
 import { displayPDF, loadDynamicUrl } from './viewPdf';
@@ -81,6 +82,28 @@ function App() {
 
   return <div style={{ height: '100vh' }} id="mypdf" className="full-window-div" />;
 
+=======
+import React, { Component, useEffect } from 'react';
+import ViewSDKClient from './ViewSDKClient';
+
+function App (){
+   useEffect(()=>{
+    const viewSDKClient = new ViewSDKClient();
+    console.log(viewSDKClient);
+    viewSDKClient.ready().then(() => {
+      
+        /* Invoke file preview */
+        /* By default the embed mode will be Full Window */
+        viewSDKClient.previewFile("pdf-div", {
+          
+        });
+    });
+}) 
+
+   
+        return <div style={{height:'100vh'}} id="pdf-div" className="full-window-div"/>;
+   
+>>>>>>> 13be19b776951da89eef641f875b7dd9fd30dc1b
 }
 
 
