@@ -8,7 +8,6 @@ then your use, modification, or distribution of it requires the prior
 written permission of Adobe.
 */
 
-<<<<<<< HEAD
 import React, { Component, useEffect, useState } from 'react';
 // import ViewSDKClient from './ViewSDKClient';
 // import { loadDynamicUrl } from './viewPdf';
@@ -120,7 +119,6 @@ function App() {
     </>
   );
 
-=======
 import React, { Component, useEffect } from 'react';
 import ViewSDKClient from './ViewSDKClient';
 
@@ -141,7 +139,6 @@ function App (){
    
         return <div style={{height:'100vh'}} id="pdf-div" className="full-window-div"/>;
    
->>>>>>> 13be19b776951da89eef641f875b7dd9fd30dc1b
 }
 
 
