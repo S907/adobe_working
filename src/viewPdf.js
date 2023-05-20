@@ -26,10 +26,11 @@ const ADOBE_KEY = 'd335ea21d7304cb9aa126236ce08ac96';
 
 
 //export function creating issue;
-export const displayPDF =(url)=> {
-    console.log('PDF stuff!');
+export const displayPDF = async (url)=> {
+  console.log('Displayfunc::::', window.AdobeDC);
+  console.log('PDF stuff!');
     let adobeDCView = new window.AdobeDC.View({clientId: ADOBE_KEY, divId: "mypdf" });
-    return adobeDCView.previewFile({
+    return  await adobeDCView.previewFile({
         //https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf
         //https://static.raymondcamden.com/enclosures/cat.pdf
         // https://acrobatservices.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf

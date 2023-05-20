@@ -10,7 +10,7 @@ written permission of Adobe.
 
 import React, { Component, useEffect, useState } from 'react';
 // import ViewSDKClient from './ViewSDKClient';
-import { loadDynamicUrl } from './viewPdf';
+// import { loadDynamicUrl } from './viewPdf';
 
 const ADOBE_KEY = 'd335ea21d7304cb9aa126236ce08ac96';
 const url = 'https://static.raymondcamden.com/enclosures/cat.pdf'
@@ -20,20 +20,28 @@ const url = 'https://static.raymondcamden.com/enclosures/cat.pdf'
 
 function App() {
   const [loaded, setLoaded] = useState(false);
-  console.log('16:::::::', window);
+  console.log('16:::::::', "App Rendered");
 
 
-
+  /**
+   * FIRST EFFECT
+   */
   useEffect(() => {
     console.log('18useeffect:::::::', window);
     if (loaded) return;
-    loadDynamicUrl(setLoaded);
-    console.log('18useeffect:::::::', window.AdobeDC);
+    // loadDynamicUrl(setLoaded);
+    const script = document.createElement('script');
+
+  script.src = "https://documentservices.adobe.com/view-sdk/viewer.js";
+  script.async = true;
+
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  }
     
-    return ()=>{
-      console.log('Entered this function');
-      window.removeEventListener('load', loadDynamicUrl(setLoaded));
-    }
+ 
   }, [loaded]);
 
 
@@ -53,24 +61,19 @@ function App() {
   // }) 
 
  
- 
+  /**
+   * SECOND EFFECT
+   */
   useEffect(() => {
     console.log('51useffect:::::', window);
     console.log('51useffect:::::', window.AdobeDC);
 
-    if (window.AdobeDC) {
-      console.log('52 useffect:::::::',window.AdobeDC);
-      displayPDF(url);
-    } else {
-      console.log('Entered else useffect');
-      window.addEventListener("adobe_dc_view_sdk.ready", () => displayPDF(url));
-    };
-    function displayPDF(url) {
+    const displayPDF = (url) => {
       console.log('Displayfunc::::', window.AdobeDC);
       console.log('PDF stuff!');
       let adobeDCView = new window.AdobeDC.View({ clientId: ADOBE_KEY, divId: "mypdf" });
       console.log('60useffect::::', adobeDCView);
-           adobeDCView.previewFile({
+         return  adobeDCView.previewFile({
         //https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf
         //https://static.raymondcamden.com/enclosures/cat.pdf
         content: { location: { url: url } },
@@ -82,6 +85,16 @@ function App() {
         });
     }
     // displayPDF(url);
+
+    
+    if (window.AdobeDC) {
+      console.log('Entered if 2nduseffect');
+      console.log('52 useffect:::::::',window.AdobeDC);
+      displayPDF(url);
+    } else {
+      console.log('Entered else 2nduseffect');
+      window.addEventListener("adobe_dc_view_sdk.ready", () => displayPDF(url));
+    };
     return () => {
       console.log('Cleanup2nd::::::', window.AdobeDC);
       document.removeEventListener("adobe_dc_view_sdk.ready", ()=>displayPDF(url));
@@ -94,9 +107,9 @@ function App() {
 
   return (
     <>
-    <div className='wrapper'>
+    <div style={{ height: '60vh' }}  className='wrapper'>
 
-    <div style={{ height: '100vh' }} id="mypdf" className="full-window-div" />
+    <div id="mypdf" className="full-window-div" />
 
     </div>
     </>
